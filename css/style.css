@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    margin-top: 40px;
+    width: 500px;
+    height: 500px;
+    background-color: blue;
+}
+
+.visor {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    height: 50px;
+    width: 80%;
+    background-color: white;
+    font-size: 28px;
+    padding: 0px 10px 0px 10px ;
+}
+
+.teclas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 400px;
+}
+
+.container button {
+    font-size: 20px;
+    margin: 5px;
+    height: 60px;
+    flex: 0 0 calc(100px - 20px);
+}

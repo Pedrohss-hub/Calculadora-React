@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
 </head>
 <body>
-    
+    <section class="container">
+        <span class="visor"></span>
+
+        <div class="teclas">
+
+            <button onclick="">AC</button>
+            <button>()</button>
+            <button onclick="updateVisor('%')">%</button>
+            <button onclick="updateVisor('/')">/</button>
+            <button onclick="updateVisor(7)">7</button>
+            <button onclick="updateVisor(8)">8</button>
+            <button onclick="updateVisor(9)">9</button>
+            <button onclick="updateVisor('X')">X</button>
+            <button onclick="updateVisor(4)">4</button>
+            <button onclick="updateVisor(5)">5</button>
+            <button onclick="updateVisor(6)">6</button>
+            <button onclick="updateVisor('-')">-</button>
+            <button onclick="updateVisor(1)">1</button>
+            <button onclick="updateVisor(2)">2</button>
+            <button onclick="updateVisor(3)">3</button>
+            <button onclick="updateVisor('+')">+</button>
+            <button ><</button>
+            <button onclick="updateVisor(0)">0</button>
+            <button onclick="updateVisor(',')">,</button>
+            <button onclick="calculate()">=</button>
+
+        </div>
+        
+    </section>
 </body>
 </html>
