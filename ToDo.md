@@ -1,10 +1,13 @@
 A fazeres:
 
-Visual
-- Botões de aritmética básica(+,-,x,/);
+Visual: 
+- Diminuir o tamanho dos operadores {}
 
 Programático
-- Não permitir digitar operadores no começo;
-- Apagar um item anterior;
-- Btn Porcentagem(%);
-- Parênteses;
+
+- Deixar zero como valor inicial {x}
+- Apenas 1 operador {}
+
+- Btn Porcentagem(%) {}
+- Parênteses {}
+- Apagar um item anterior {}
