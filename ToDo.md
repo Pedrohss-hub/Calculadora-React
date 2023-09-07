@@ -6,8 +6,8 @@ Visual:
 Programático
 
 - Deixar zero como valor inicial {x}
-- Apenas 1 operador {}
-
+- Apenas 1 operador {x}
 - Btn Porcentagem(%) {}
+
 - Parênteses {}
 - Apagar um item anterior {}
