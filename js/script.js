@@ -1,58 +1,73 @@
-const btns = document.querySelectorAll('.op')
-const visor = document.querySelector('.visor')
-let percentage = false
-visor.textContent = 0
+const inputValue = document.querySelector('.visor');
+const btnOperators = document.querySelectorAll('[name="operator"]');
+const btnParenthese = document.querySelector('[name="parenthese"]');
+let tokenParenteshe = 0;
+let arrayToCut;
+let arrayParenthese;
 
-// Atualizar o Valor do Visor
-const updateVisor = (val) => {
-        if(val == '%'){
-            percentage = true
+const updateInput = (value) => {
+    //Inserção Númerico
+    if(value >= 0){
+        inputValue.textContent += value
+ 
+        //Ativando btnOperators
+        btnOperators.forEach((item) => {
+            item.disabled = false
+        })
+    }
+
+    //Inserção Operadores & Destivação
+    if(['%','/','*','-','+','.'].includes(value) && inputValue.textContent != ''){
+        inputValue.textContent += value
+        btnOperators.forEach((item) => {
+            item.disabled = true
+        })
+
+        //Ativa btnParenthese
+        btnParenthese.disabled = false
+    }
+
+    //Parênteses Abertura
+    console.log(btnOperators.disabled)
+    if (value == '('){
+        arrayParenthese = inputValue.textContent.split('');
+        console.log(arrayParenthese)
+        if(!['%','/','*','-','+','.'].includes(arrayParenthese[inputValue.textContent.length-1])){
+            arrayParenthese.push('*');
         }
-        
-            //Apagar todos os Valores
-        if (val == 'AC') {
-            visor.textContent = 0
-            //Ativar Operadores
-            btns.forEach((item)=>{
-                item.disabled = true
-            })
+        inputValue.textContent = arrayParenthese.join('');
+        inputValue.textContent += '(';
 
-            //Inserção de Valores
-        } else {
-            
-            //Desabilitando Operadores
-            if (['.', '/', '*', '-', '+', '%'].includes(val)) {
-                visor.textContent += val
-                btns.forEach((item) => {
-                console.log('desativado');
-                item.disabled = false;
-                console.log(item)
-                });
+        tokenParenteshe += 1;
+        btnParenthese.disabled = true;
+    }
 
-            } else {
-                //Adição Inicial de Números
-                if((visor.value == 0 && val > 0 && visor.value != '0.') || (val == '0' && visor.value == '0')){
-                    visor.textContent = val
-                    //Ativar Operadores
-                    btns.forEach((item)=>{
-                        item.disabled = false
-                    })
+    //Parênteses Fechamento
+    if (value == ')' && tokenParenteshe > 0){
+        inputValue.textContent += ')';
+        tokenParenteshe -= 1
+    }
 
-                //Adição de Números
-                } else {
-                    visor.textContent += val 
-                    //Ativar os operadores
-                    btns.forEach((item)=>{
-                        item.disabled = false
-                    })
-                }
-            }
+
+    //Apagar Item
+    if(value == 'AC'){
+        arrayToCut = inputValue.textContent.split('');
+        if(arrayToCut[arrayToCut.length-1] == '('){
+            tokenParenteshe -= 1;
+            btnParenthese.disabled = false;
         }
-    
-    
+
+        if(arrayToCut[arrayToCut-1] == ')'){
+            tokenParenteshe += 1;
+        }
+
+        arrayToCut.pop();
+        inputValue.textContent = arrayToCut.join('')
+    }
+
     //Tranformando dados em Array
-    visor.value = visor.textContent
-    let visualArithmetic = visor.value.split('')
+    inputValue.value = inputValue.textContent
+    let visualArithmetic = inputValue.value.split('')
 
     //Transformação dos operadores
     visualArithmetic.forEach((item, index, array)=>{
@@ -62,26 +77,15 @@ const updateVisor = (val) => {
             array[index] = 'x'
         } 
     })
+    inputValue.value = visualArithmetic.join('')
 
-    visor.value = visualArithmetic.join('')
+    if (inputValue.textContent == ''){
+        inputValue.value = 0
+    }
 }
 
-//Calcular o Valor
+//Calcular
 const calculate = () => {
-    if (percentage){
-        percentage = visor.textContent.split('')
-        console.log(percentage)
-        percentage.forEach((item,index,array)=>{
-            if (item == '%') {
-                array[index] = '/100*'
-            }
-        })
-
-        visor.textContent = percentage.join('')
-        console.log(percentage)
-        percentage = false
-    }
-    visor.textContent = eval(visor.textContent)
-    console.log(visor.textContent)
-    visor.value = visor.textContent
+    inputValue.value = eval(inputValue.textContent);
+    inputValue.textContent = inputValue.value
 }
