@@ -11,9 +11,38 @@ export default function App(){
   }
 
   function CurrentValue(value){
-    console.log(displayKey) 
-    setDisplayKey(displayKey => [...displayKey, value])
-    console.log(displayKey)
+    switch (value){
+
+      case '=':
+        let mathExpression = displayKey;
+        for(let i = 0; i < mathExpression.length; i++){
+          if(mathExpression[i] == "%"){
+            mathExpression[i-1] = `${mathExpression[i-1]}/100`
+            mathExpression[i] = "*"
+          }
+        }
+        mathExpression = mathExpression.join('')
+        mathExpression = eval(mathExpression)
+        mathExpression = (mathExpression.toString()).split('')
+        setDisplayKey(mathExpression);
+      break;
+
+      case 'AC':
+        if(displayKey.length > 1){
+          let deleteLastValue = [...displayKey]
+          deleteLastValue.pop()
+          setDisplayKey(deleteLastValue)
+        } else {
+          setDisplayKey([])
+        }
+
+        console.log('foi')
+      break;
+
+      default:
+        setDisplayKey(displayKey => [...displayKey, value]);
+      break;
+    }
   }
 
   //Array of Keys
@@ -29,6 +58,7 @@ export default function App(){
             <Key key={index} className={element.class}>{element.value}</Key>
           )
         })}
+        {console.log(displayKey)}
 
       </div>
     </div>
