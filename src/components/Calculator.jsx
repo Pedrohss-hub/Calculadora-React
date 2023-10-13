@@ -3,6 +3,7 @@ import './Calculator.css';
 
 export default function App(){
   const [displayKey, setDisplayKey] = useState("")
+  const [isOperator, setIsOperator] = useState(true)
   
   function Key(props){
     return(
@@ -40,7 +41,20 @@ export default function App(){
       break;
 
       default:
-        setDisplayKey(displayKey => [...displayKey, value]);
+        if ((value === '*' || value === '/' || value === '-' || value === '+' || value === '%')){
+          if(isOperator) {
+            const changeOperator = [...displayKey];
+            changeOperator[changeOperator.length -1] = value;
+            setDisplayKey(changeOperator)
+
+          } else {
+            setDisplayKey(displayKey => [...displayKey, value]);
+            setIsOperator(true);
+          }
+        } else{
+          setIsOperator(false);
+          setDisplayKey(displayKey => [...displayKey, value]);
+        }
       break;
     }
   }
@@ -58,6 +72,7 @@ export default function App(){
             <Key key={index} className={element.class}>{element.value}</Key>
           )
         })}
+        {console.log(isOperator)}
         {console.log(displayKey)}
 
       </div>
