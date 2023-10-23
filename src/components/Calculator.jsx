@@ -4,6 +4,7 @@ import './Calculator.css';
 export default function App(){
   const [displayKey, setDisplayKey] = useState("")
   const [isOperator, setIsOperator] = useState(true)
+  const [valueOfArray, setValueOfArray] = useState([])
   
   function Key(props){
     return(
@@ -12,59 +13,46 @@ export default function App(){
   }
 
   function CurrentValue(value){
-    switch (value){
+    let type = null
 
-      case '=':
-        let mathExpression = displayKey;
-        for(let i = 0; i < mathExpression.length; i++){
-          if(mathExpression[i] == "%"){
-            mathExpression[i-1] = `${mathExpression[i-1]}/100`
-            mathExpression[i] = "*"
-          }
-        }
-        mathExpression = mathExpression.join('')
-        mathExpression = eval(mathExpression)
-        mathExpression = (mathExpression.toString()).split('')
-        setDisplayKey(mathExpression);
-      break;
+    function pieaceMath (type, value){
+      this.type = type,
+      this.value = value
+    }
 
-      case 'AC':
-        if(displayKey.length > 1){
-          let deleteLastValue = [...displayKey]
-          deleteLastValue.pop()
-          setDisplayKey(deleteLastValue)
-        } else {
-          setDisplayKey([])
-        }
+    if(['/','*','-','+','%'].includes(value)){
+      if(value == '-'){
+        type = 'NegativeOperator'
+      } else {
+        type = 'Operator'
+      }
+    } else {
+      type = 'Number'
+    }
+    const obj = new pieaceMath(type, value)
+z
+    if (valueOfArray[0] == null){
+      setValueOfArray([...valueOfArray, obj])
+    } else {
 
-        console.log('foi')
-      break;
+      if (valueOfArray[valueOfArray.length-1].type == obj.type && obj.type == 'Number'){
+        console.log(obj.type) 
+        let incrementValue = valueOfArray.slice()
+        incrementValue[valueOfArray.length-1].value += value
+        setValueOfArray(incrementValue)
 
-      default:
-        if ((value === '*' || value === '/' || value === '-' || value === '+' || value === '%')){
-          if(isOperator) {
-            const changeOperator = [...displayKey];
-            changeOperator[changeOperator.length -1] = value;
-            setDisplayKey(changeOperator)
+      } else {
+        setValueOfArray([...valueOfArray, obj])
+      }
 
-          } else {
-            setDisplayKey(displayKey => [...displayKey, value]);
-            setIsOperator(true);
-          }
-        } else{
-          setIsOperator(false);
-          setDisplayKey(displayKey => [...displayKey, value]);
-        }
-      break;
     }
   }
 
-  //Array of Keys
   const key = [{value:"(", class:'specialKey2'}, {value:")", class:'specialKey2'},  {value:"%", class:'specialKey2'}, {value:"AC", class:'specialKey'}, {value:"7"}, {value:"8"}, {value:"9"}, {value:"/"}, {value:"4"}, {value:"5"}, {value:"6"}, {value:"*"},{value:"1"}, {value:"2"}, {value:"3"}, {value:"-"}, {value:"."}, {value:"0"}, {value:"="},{value:"+"}]
 
   return(
     <div className='container-main'>
-      <div className='display-box'>{displayKey}</div>
+      <div className='display-box'>{valueOfArray.map((item) => item.value)}</div>
       <div className="keys-box">
 
         {key.map((element, index)=>{
@@ -72,8 +60,10 @@ export default function App(){
             <Key key={index} className={element.class}>{element.value}</Key>
           )
         })}
-        {console.log(isOperator)}
-        {console.log(displayKey)}
+        
+        {/*console.log(isOperator)*/}
+        {/*console.log(displayKey)*/}
+        {console.log(valueOfArray.map((item) => item))}
 
       </div>
     </div>
